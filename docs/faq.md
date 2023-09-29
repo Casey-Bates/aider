@@ -4,6 +4,7 @@
 - [How does aider use git?](#how-does-aider-use-git)
 - [GPT-4 vs GPT-3.5](#gpt-4-vs-gpt-35)
 - [Aider isn't editing my files?](#aider-isnt-editing-my-files)
+- [Accessing other LLMs with OpenRouter](#accessing-other-llms-with-openrouter)
 - [Can I use aider with other LLMs, local LLMs, etc?](#can-i-use-aider-with-other-llms-local-llms-etc)
 - [Can I change the system prompts that aider uses?](#can-i-change-the-system-prompts-that-aider-uses)
 - [Can I run aider in Google Colab?](#can-i-run-aider-in-google-colab)
@@ -112,14 +113,27 @@ In these cases, here are some things you might try:
   - Use `/drop` to remove files from the chat session which aren't needed for the task at hand. This will reduce distractions and may help GPT produce properly formatted edits.
   - Use `/clear` to remove the conversation history, again to help GPT focus.
 
+## Accessing other LLMs with OpenRouter
+
+[OpenRouter](https://openrouter.ai) provide an interface to [many models](https://openrouter.ai/docs) which are not widely accessible, in particular gpt-4-32k and claude-2.
+
+To access the openrouter models simply
+
+- register for an account, purchase some credits and generate an api key
+- set --openai-api-base to https://openrouter.ai/api/v1
+- set --openai-api-key to your openrouter key
+- set --model to the model of your choice (openai/gpt-4-32k, anthropic/claude-2 etc.)
+
+Some of the models weren't very functional and each llm has its own quirks. The anthropic models work ok, but the llama-2 ones in particular will need more work to play friendly with aider.
+
 ## Can I use aider with other LLMs, local LLMs, etc?
 
-Aider only has experimental support for LLMs other than OpenAI's GPT-3.5 and GPT-4. This is for two reasons:
+Aider provides experimental support for LLMs other than OpenAI's GPT-3.5 and GPT-4. The support is currently only experimental for two reasons:
 
-- GPT-3.5 is just barely capable of *editing code* to provide aider's interactive "pair programming" style workflow. None of the other models seem to be as capable as GPT-3.5.
+- GPT-3.5 is just barely capable of *editing code* to provide aider's interactive "pair programming" style workflow. None of the other models seem to be as capable as GPT-3.5 yet.
 - Just "hooking up" aider to a new model by connecting to its API is almost certainly not enough to get it working in a useful way. Getting aider working well with GPT-3.5 and GPT-4 was a significant undertaking, involving [specific code editing prompts and backends for each model and extensive benchmarking](https://aider.chat/docs/benchmarks.html). Officially supporting each new LLM will probably require a similar effort to tailor the prompts and editing backends.
 
-That said, aider does provide features to experiment with other models. Numerous users have already done experiments with numerous models. None of these experiments have yet identified other models that look like they are capable of working with aider.
+Numerous users have done experiments with numerous models. None of these experiments have yet identified other models that look like they are capable of working well with aider.
 
 Once we see signs that a *particular* model is capable of code editing, it would be reasonable for aider to attempt to officially support such a model. Until then, aider will simply maintain experimental support for using alternative models.
 
